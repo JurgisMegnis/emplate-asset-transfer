@@ -1,7 +1,9 @@
-<div class="icon-container">
-    <img [src]="icon()" alt="The icon for step {{id()}}">
-</div>
-<div class="text-container">
-    <h3>{{title()}}</h3>
-    <p>{{description()}}</p>
+<div class="step-item-container">
+    <div class="icon-container">
+        <img [src]="icon()" alt="The icon for step {{id()}}">
+    </div>
+    <div class="text-container">
+        <h3>{{ title() }}{{ required() ? '*' : '' }}</h3>
+        <p>{{ description() }}</p>
+    </div>
 </div>

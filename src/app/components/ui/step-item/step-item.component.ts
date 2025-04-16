@@ -11,4 +11,5 @@ export class StepItemComponent {
   icon = input<string>();
   title = input<string>();
   description = input<string>();
+  required = input<boolean>();
 }

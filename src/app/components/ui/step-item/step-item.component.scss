@@ -1,0 +1,18 @@
+@import '../../../../styles/styles.scss';
+
+.step-item-container {
+    display: flex;
+    gap: 12px;
+
+    .text-container {
+        h3 {
+            @include body-s;
+            color: $base-dark;
+        }
+
+        p {
+            @include body-xs;
+            color: $support-medium-500;
+        }
+    }
+}
