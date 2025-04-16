@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { STEPS } from '../../../data/steps-data';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-step-item',
@@ -8,5 +7,8 @@ import { STEPS } from '../../../data/steps-data';
   styleUrl: './step-item.component.scss'
 })
 export class StepItemComponent {
-  steps = STEPS;
+  id = input<string>();
+  icon = input<string>();
+  title = input<string>();
+  description = input<string>();
 }
