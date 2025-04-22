@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-step-item',
@@ -8,8 +8,10 @@ import { Component, input } from '@angular/core';
 })
 export class StepItemComponent {
   id = input<string>();
-  icon = input<string>();
+  iconIdle = input<string>();
+  iconActive = input<string>();
   title = input<string>();
   description = input<string>();
   required = input<boolean>();
+  active = input<boolean>();
 }

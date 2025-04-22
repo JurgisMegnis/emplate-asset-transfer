@@ -4,8 +4,10 @@ export class Step {
     public id: string,
     public title: string,
     public description: string,
-    public fileType: string,
+    public fileType: string[],
     public required: boolean = false,
-    public icon: string
+    public iconIdle: string,
+    public iconActive: string,
+    public active: boolean
   ) {}
 }
