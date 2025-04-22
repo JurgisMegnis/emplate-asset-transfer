@@ -1,4 +1,4 @@
-import { Step } from "../models/step/step.model";
+import { Step } from "./step.model";
 
 export const STEPS: Step[]= [
     new Step('00', 'Welcome', 'Let\'s get started', [], true, 'icons/step-idle/00.svg', 'icons/step-active/00.svg', true),
