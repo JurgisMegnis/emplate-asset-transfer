@@ -1,0 +1,52 @@
+@use '../../../../styles/styles.scss';
+
+.step-item-container {
+    display: flex;
+    gap: 12px;
+    padding: 0.25rem;
+    align-items: center;
+    width: 328px;
+    margin-bottom: 16px;
+
+    .icon-container {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 4px;
+        border: 1px solid rgba(8, 9, 10, 0.06);
+        background-color: styles.$support-light-500;
+        box-shadow: 0px 9px 3px 0px rgba(8, 9, 10, 0.00), 0px 13px 4px 0px rgba(8, 9, 10, 0.00), 0px 5px 3px 0px rgba(8, 9, 10, 0.01), 0px 2px 2px 0px rgba(8, 9, 10, 0.02), 0px 1px 1px 0px rgba(8, 9, 10, 0.02);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .text-container {
+        h3 {
+            @include styles.body-s;
+            color: styles.$base-dark;
+        }
+
+        p {
+            @include styles.body-xs;
+            color: styles.$support-medium-500;
+        }
+    }
+}
+
+.active {
+    border-radius: 6px;
+    background: linear-gradient(styles.$main-blue-100, styles.$main-blue-100) padding-box,
+              linear-gradient(130deg,rgba(208, 207, 221, 5) 0%, rgba(180, 178, 200, 100) 100%) border-box;
+    border: 1px solid transparent;
+    
+    .icon-container {
+        background-color: styles.$main-blue-500;
+    }
+
+    .text-container {
+        h3 {
+            color: styles.$main-blue-500;
+        }
+    }
+}
