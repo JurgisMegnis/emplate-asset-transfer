@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StepsService } from '../../../service/steps.service';
 import { Step } from '../../../data/step.model';
 import { StepItemComponent } from '../../ui/step-item/step-item.component';
@@ -9,12 +9,7 @@ import { StepItemComponent } from '../../ui/step-item/step-item.component';
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss'
 })
-export class StepperComponent implements OnInit {
-  steps: Step[] = [];
+export class StepperComponent {
 
   constructor(public stepsService: StepsService) {}
-
-  ngOnInit(): void {
-    this.steps = this.stepsService.steps();
-  }
 }
