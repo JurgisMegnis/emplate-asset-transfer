@@ -8,6 +8,7 @@ export class Step {
     public required: boolean = false,
     public iconIdle: string,
     public iconActive: string,
-    public active: boolean
+    public active: boolean,
+    public completed: boolean,
   ) {}
 }

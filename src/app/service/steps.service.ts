@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 import { Step } from '../data/step.model';
 import { STEPS } from '../data/steps-data';
 
@@ -7,42 +7,64 @@ import { STEPS } from '../data/steps-data';
 })
 export class StepsService {
   private stepsSignal = signal<Step[]>([...STEPS]);
-
   public steps = this.stepsSignal.asReadonly();
+  
+  // Signal with the ID of the currently active step
+  private activeStepSignal: Signal<Step | undefined> = computed(() => 
+    this.stepsSignal().find(step => step.active)
+  );
+
+  // Signal with the index of the currently active step 
+  private activeStepIndexSignal: Signal<number> = computed(() => 
+    this.stepsSignal().findIndex(step => step.id === this.activeStepSignal()?.id)
+  )
 
   constructor() { }
   
   nextStep() {
-    // Find currently active step
-    const activeStep: Step | undefined = this.stepsSignal().find(step => step.active);
+    if (this.activeStepIndexSignal() < this.stepsSignal().length - 1) {
+      // Calculate the next index
+      const nextStepIndex: number = this.activeStepIndexSignal() + 1;
 
-    if(!activeStep) {
-      return
+      // Get ID if the next step
+      const nextStepId: string = this.stepsSignal()[nextStepIndex].id;
+
+      // Update the steps
+      this.stepsSignal.update(steps =>
+        steps.map(step => {
+          if (step.id === this.activeStepSignal()?.id) {
+            return { ...step, active: false, completed: true };
+          } else if (step.id === nextStepId) {
+            return { ...step, active: true };
+          } else {
+            return step;
+          }
+        })
+      );
     }
-    
-    // Find the index if the active step
-    const activeStepIndex: number | undefined = this.stepsSignal().findIndex(step => step.id === activeStep.id);
+  }
 
-    // Calculate the next index (avoid getting out of bounds)
-    const nextStepIndex: number = Math.min(activeStepIndex + 1, this.stepsSignal().length - 1);
+  previousStep() {
+    if (this.activeStepIndexSignal() > 0) {
+      // Calculate the previous index
+      const prevStepIndex: number = this.activeStepIndexSignal() - 1;
 
-    // Get ID if the next step
-    const nextStepId: string = this.stepsSignal()[nextStepIndex].id;
+      // Get ID of the previous step
+      const prevStepId: string = this.stepsSignal()[prevStepIndex].id;
 
-    // Update the steps
-    this.stepsSignal.update(steps =>
-      steps.map(step => {
-        if (step.id === activeStep.id) {
-          return { ...step, active: false };
-        } else if (step.id === nextStepId) {
-          return { ...step, active: true };
-        } else {
-          return step;
-        }
-      })
-    );
-
-    console.log(activeStepIndex);
+      // Update the steps
+      this.stepsSignal.update(steps =>
+        steps.map(step => {
+          if (step.id === this.activeStepSignal()?.id) {
+            return { ...step, active: false };
+          } else if (step.id === prevStepId) {
+            return { ...step, active: true, completed: false };
+          } else {
+            return step;
+          }
+        })
+      );
+    }
   }
 }
 
