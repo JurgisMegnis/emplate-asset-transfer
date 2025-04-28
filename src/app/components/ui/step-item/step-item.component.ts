@@ -14,4 +14,5 @@ export class StepItemComponent {
   description = input<string>();
   required = input<boolean>();
   active = input<boolean>();
+  completed = input<boolean>();
 }

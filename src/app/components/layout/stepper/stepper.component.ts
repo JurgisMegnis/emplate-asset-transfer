@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { STEPS } from '../../../data/steps-data';
+import { StepsService } from '../../../service/steps.service';
+import { Step } from '../../../data/step.model';
 import { StepItemComponent } from '../../ui/step-item/step-item.component';
 
 @Component({
@@ -9,5 +10,6 @@ import { StepItemComponent } from '../../ui/step-item/step-item.component';
   styleUrl: './stepper.component.scss'
 })
 export class StepperComponent {
-  steps = STEPS;
+
+  constructor(public stepsService: StepsService) {}
 }

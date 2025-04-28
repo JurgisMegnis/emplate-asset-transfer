@@ -1,4 +1,4 @@
-<div class="step-item-container" [class.active]="active()">
+<div class="step-item-container" [class.active]="active()" [class.completed]="completed()">
     <div class="icon-container">
         @if (active() === true) {
         <img [src]="iconActive()" alt="The icon for step {{id()}}">
