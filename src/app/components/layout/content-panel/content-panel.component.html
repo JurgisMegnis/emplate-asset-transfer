@@ -1,0 +1,11 @@
+<h2>
+    <span>{{ stepsService.activeStepSignal()?.id }} / </span>
+    {{ stepsService.activeStepSignal()?.title }}
+</h2>
+
+@for (component of this.components; track $index) {
+    <ng-container [ngComponentOutlet]="component"></ng-container>
+}
+
+<app-secondary-button (click)="stepsService.previousStep(); this.dynamicComponentAssign()" label="Back"></app-secondary-button>
+<app-primary-button (click)="stepsService.nextStep(); this.dynamicComponentAssign()" label="Next"></app-primary-button>
