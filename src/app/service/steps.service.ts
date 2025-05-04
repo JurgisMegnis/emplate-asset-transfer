@@ -1,4 +1,4 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { Step } from '../data/step.model';
 import { STEPS } from '../data/steps-data';
 
@@ -6,11 +6,11 @@ import { STEPS } from '../data/steps-data';
   providedIn: 'root'
 })
 export class StepsService {
-  private stepsSignal = signal<Step[]>([...STEPS]);
-  public steps = this.stepsSignal.asReadonly();
+  private stepsSignal: WritableSignal<Step[]> = signal<Step[]>([...STEPS]);
+  public steps: Signal<Step[]> = this.stepsSignal.asReadonly();
   
-  // Signal with the ID of the currently active step
-  private activeStepSignal: Signal<Step | undefined> = computed(() => 
+  // Signal with the currently active step
+  public activeStepSignal: Signal<Step | undefined> = computed(() => 
     this.stepsSignal().find(step => step.active)
   );
 
@@ -18,7 +18,7 @@ export class StepsService {
   private activeStepIndexSignal: Signal<number> = computed(() => 
     this.stepsSignal().findIndex(step => step.id === this.activeStepSignal()?.id)
   )
-
+  
   constructor() { }
   
   nextStep() {

@@ -1,3 +1,8 @@
-<app-stepper></app-stepper>
-<app-secondary-button (click)="stepsService.previousStep()" label="Back"></app-secondary-button>
-<app-primary-button (click)="stepsService.nextStep()" label="Next"></app-primary-button>
+<div class="main">
+    <div class="left-container">
+        <app-stepper></app-stepper>
+    </div>
+    <div class="right-container">
+        <app-content-panel></app-content-panel>
+    </div>
+</div>
