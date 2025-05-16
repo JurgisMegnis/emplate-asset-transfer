@@ -1,0 +1,30 @@
+@use '../../../../styles/styles.scss';
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 90%;
+    align-content: center;
+    justify-content: center;  
+
+    h2 {
+        color: styles.$base-dark;
+        @include styles.h2;
+        margin-bottom: 16px; 
+
+        span {
+            color: styles.$support-medium-500;
+        }
+    }
+
+}
+
+.button-container {
+    display: flex;
+    height: 10%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: end;
+    padding: 0 16px 16px 16px;
+} 
