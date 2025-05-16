@@ -1,11 +1,17 @@
-<h2>
-    <span>{{ stepsService.activeStepSignal()?.id }} / </span>
-    {{ stepsService.activeStepSignal()?.title }}
-</h2>
+<div class="form-container">
+    <h2>
+        <span>{{ stepsService.activeStepSignal()?.id }} / </span>
+        {{ stepsService.activeStepSignal()?.title }}
+    </h2>
 
-@for (component of this.components; track $index) {
-    <ng-container [ngComponentOutlet]="component"></ng-container>
-}
+    <div class="input-component">
+        @for (component of this.components; track $index) {
+            <ng-container [ngComponentOutlet]="component"></ng-container>
+        }
+    </div>
+</div>
 
-<app-secondary-button (click)="stepsService.previousStep(); this.dynamicComponentAssign()" label="Back"></app-secondary-button>
-<app-primary-button (click)="stepsService.nextStep(); this.dynamicComponentAssign()" label="Next"></app-primary-button>
+<div class="button-container">
+    <app-secondary-button (click)="stepsService.previousStep(); this.dynamicComponentAssign()" label="Back"></app-secondary-button>
+    <app-primary-button (click)="stepsService.nextStep(); this.dynamicComponentAssign(); this.submitForm()" label="Next"></app-primary-button>
+</div>

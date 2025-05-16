@@ -1,1 +1,45 @@
-<input type="file" name="" id="files" [formControl]="files" onchange="console.log(event.target.files)" multiple>
+<div 
+    class="dropzone"
+    [class.active]="dragOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    <div class="dropzone-content">
+        <p>Drag & drop or</p>
+        <a (click)="fileInput.click()">choose files</a>
+        <input 
+            #fileInput 
+            type="file" 
+            name="" 
+            id="files" 
+            [formControl]="files" 
+            (change)="onFileSelected($event)"
+            style="display: none;" 
+            multiple>
+        <p>to upload.</p>
+    </div>
+</div>
+
+@if (filesArray.length > 0) {
+    <div class="selected-files">
+        @for (file of filesArray; track $index) {
+            <div class="file-item">
+                <div class="icon-info-container">
+                    <div class="icon-container">
+                        <img src="icons/file.svg" alt="">
+                    </div>
+                    <div class="info-container">
+                        <p class="name">{{ fileNameSplit(file.name) }}</p>
+                        <p class="details">{{ fileExtensionSplit(file.name) }} / {{ sizeConvert(file.size) }}</p>
+                    </div>
+                </div>
+                <div class="delete-icon-container" (click)="remove($index)">
+                    <svg width="48" height="48" viewBox="-12 -12 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="trash-base" fill="currentColor" d="M18.1625 5C19.242 5 20.0841 5.93526 19.9711 7.00879L18.5356 20.3721C18.4381 21.2974 17.6574 22 16.727 22H7.27385C6.34342 22 5.56271 21.2974 5.46526 20.3721L4.02971 7.00879C3.91671 5.93527 4.75886 5.00001 5.83831 5H18.1625ZM7.43596 20H16.5649L18.0004 7H6.00041L7.43596 20ZM12.0004 8.59082C12.3768 8.59082 12.6819 8.89607 12.6821 9.27246V17.5371C12.6821 17.9137 12.377 18.2188 12.0004 18.2188C11.624 18.2186 11.3188 17.9136 11.3188 17.5371V9.27246C11.319 8.89615 11.6241 8.59094 12.0004 8.59082ZM8.29045 8.59473C8.66457 8.55382 9.00125 8.82409 9.04241 9.19824L9.95159 17.4619C9.99276 17.8362 9.72237 18.1737 9.34807 18.2148C8.97383 18.2559 8.6373 17.9856 8.59612 17.6113L7.68694 9.34668C7.64586 8.97244 7.91621 8.63589 8.29045 8.59473ZM15.7114 8.59473C16.0856 8.63589 16.3559 8.97246 16.3149 9.34668L15.4057 17.6113C15.3645 17.9855 15.0278 18.2557 14.6537 18.2148C14.2794 18.1737 14.009 17.8362 14.0502 17.4619L14.9594 9.19824C15.0006 8.82397 15.3371 8.5536 15.7114 8.59473Z"/>
+                        <path class="trash-lid" fill="currentColor" d="M14 2C15.1046 2 16 2.89543 16 4V5H21.0908C21.5929 5 22 5.44772 22 6C22 6.55228 21.5929 7 21.0908 7H2.90918C2.4071 7 2 6.55228 2 6C2 5.44772 2.4071 5 2.90918 5H8V4C8 2.89543 8.89543 2 10 2H14ZM10 5H14V4H10V5Z"/>
+                    </svg>
+                </div>
+            </div>
+        }
+    </div>
+}
