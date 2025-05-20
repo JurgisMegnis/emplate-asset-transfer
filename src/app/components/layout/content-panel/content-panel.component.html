@@ -5,8 +5,10 @@
     </h2>
 
     <div class="input-component">
-        @for (component of this.components; track $index) {
-            <ng-container [ngComponentOutlet]="component"></ng-container>
+        @for (component of this.componentData; track $index) {
+            <ng-container 
+                [ngComponentOutlet]="component.type"
+                [ngComponentOutletInputs]="component.inputs"></ng-container>
         }
     </div>
 </div>
