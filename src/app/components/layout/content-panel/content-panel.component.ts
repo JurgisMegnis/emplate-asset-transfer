@@ -1,4 +1,4 @@
-import { Component, Type, OnInit, Signal, input } from '@angular/core';
+import { Component, Type, Signal, input, computed } from '@angular/core';
 import { StepsService } from '../../../service/steps.service';
 import { PrimaryButtonComponent } from '../../ui/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../ui/secondary-button/secondary-button.component';
@@ -23,40 +23,38 @@ type ComponentDataType = {type: Type<DynamicComponent>, inputs: Record<string, s
   templateUrl: './content-panel.component.html',
   styleUrl: './content-panel.component.scss'
 })
-export class ContentPanelComponent implements OnInit {
-  // Get the active step
-  private activeStep: Step | undefined;
+export class ContentPanelComponent {
+  // A signal tracking the currently active step
+  protected activeStep: Signal <Step | undefined> = computed(() => this.stepsService.activeStepSignal())
+  // A signal that updates with activeStep changes rendering the necessary data
+  protected componentData: Signal<ComponentDataType[] | null> = computed(() => this.newComponentDataObj(this.activeStep()))
 
-  // Components array that contains input component classes that are necessary for the currently active step
-  protected components: Type<DynamicComponent>[] | null = null;
+  constructor(public stepsService: StepsService, private fileFormService: FileFormService ) {}
 
-  protected componentData: ComponentDataType[] | null = null;
-
-  // Registry that maps component strings (from the data source) to their corresponding component classes
+   // Registry that maps component strings (from the data source) to their corresponding component classes
   private componentMap: Record<string, Type<DynamicComponent>> = {
     'TextInputComponent': TextInputComponent,
     'FileUploadComponent': FileUploadComponent
   };
 
-  constructor(public stepsService: StepsService, private fileFormService: FileFormService ) {}
+  // Takes the currently active step data and creates the relevant data object for the component
+  private newComponentDataObj(activeStep: Step | undefined): ComponentDataType[] | null {
+    if (!activeStep) {return null}
 
-  ngOnInit(): void {
-    // Get the currently active step
-    this.activeStep = this.stepsService.activeStepSignal();
-    // Early return if there is no active step
-    if (!this.activeStep) {return}
-
-    // Pass the input component classes that are necessary for the currently active step to the components array
-    this.components = this.activeStep.components
+    const components: Type<DynamicComponent>[] = activeStep.components
       .map(item => this.componentMap[item as keyof typeof this.componentMap])
-      .filter((component): component is Type<DynamicComponent> => component !== undefined) || null;
+      .filter((component): component is Type<DynamicComponent> => component !== undefined);
 
-    this.componentData = this.components?.map((item, index) => {
+    if (!components?.length) {
+      return null;
+    }
+
+    return components.map((item, index) => {
       let inputConfig: Record<string, string>;
 
       if (item === TextInputComponent) {
-        const labelValue = this.activeStep?.componentInputs?.['label']?.[index] || '';
-        const placeholderValue = this.activeStep?.componentInputs?.['placeholder']?.[index] || '';
+        const labelValue = activeStep.componentInputs?.['label']?.[index] || '';
+        const placeholderValue = activeStep.componentInputs?.['placeholder']?.[index] || '';
 
         inputConfig = {
           label: labelValue,
@@ -70,45 +68,20 @@ export class ContentPanelComponent implements OnInit {
         type: item,
         inputs: inputConfig
       }
-    }) || null
-  }
-
-  // Pass the input component classes that are necessary for the currently active step to the components array
-  protected dynamicComponentAssign() {
-    // Get the currently active step
-    this.activeStep = this.stepsService.activeStepSignal();
-    // Early return if there is no active step
-    if (!this.activeStep) {return}
-
-    // Pass the input component classes that are necessary for the currently active step to the components array
-    this.components = this.activeStep.components
-      .map(item => this.componentMap[item as keyof typeof this.componentMap])
-      .filter((component): component is Type<DynamicComponent> => component !== undefined) || null;
-
-    this.componentData = this.components?.map((item, index) => {
-      let inputConfig: Record<string, string>;
-
-      if (item === TextInputComponent) {
-        const labelValue = this.activeStep?.componentInputs?.['label']?.[index] || '';
-        const placeholderValue = this.activeStep?.componentInputs?.['placeholder']?.[index] || '';
-
-        inputConfig = {
-          label: labelValue,
-          placeholder: placeholderValue
-        };
-      } else {
-        inputConfig = {};
-      }
-
-      return {
-        type: item,
-        inputs: inputConfig
-      }
-    }) || null
+    });
   }
 
   submitForm() {
     const currentValue = this.fileFormService.getFormValue();
     console.log(currentValue)
+  }
+
+  handleStepChange(isNext: boolean) {
+    if (isNext) {
+      this.stepsService.nextStep();
+      this.submitForm();
+    } else {
+      this.stepsService.previousStep()
+    }
   }
 }

@@ -1,10 +1,10 @@
 import { Step } from "./step.model";
 
 export const STEPS: Step[]= [
-    new Step('00', 'Welcome', 'Let\'s get started', [], true, 'icons/step-idle/00.svg', 'icons/step-active/00.svg', true, false, ['TextInputComponent'], {label: ['yeye'], placeholder: ['yeye']}),
+    new Step('00', 'Welcome', 'Let\'s get started', [], true, 'icons/step-idle/00.svg', 'icons/step-active/00.svg', true, false, ['TextInputComponent'], {label: ['Organisation name'], placeholder: ['Mall']}),
     new Step('01', 'Logo', 'Vector files', [], true, 'icons/step-idle/01.svg', 'icons/step-active/01.svg', false, false, ['FileUploadComponent'], {}),
     new Step('02', 'Login screen', 'Image in jpg', [], true, 'icons/step-idle/02.svg', 'icons/step-active/02.svg', false, false, ['FileUploadComponent'], {}),
-    new Step('03', 'Color', 'Hex codes', [], true, 'icons/step-idle/03.svg', 'icons/step-active/03.svg', false, false, ['TextInputComponent', 'TextInputComponent'], {label: ['yeye', 'yeyeyeyeye'], placeholder: ['yeye', 'yeyeyeyeye']}),
+    new Step('03', 'Color', 'Hex codes', [], true, 'icons/step-idle/03.svg', 'icons/step-active/03.svg', false, false, ['TextInputComponent', 'TextInputComponent'], {label: ['Primary color', 'Secondary color'], placeholder: ['#00000', '#00000']}),
     new Step('04', 'App icon', 'Vector files', [], false, 'icons/step-idle/04.svg', 'icons/step-active/04.svg', false, false, ['FileUploadComponent'], {}),
     new Step('05', 'Home tab header', 'Image in jpg', [], false, 'icons/step-idle/05.svg', 'icons/step-active/05.svg', false, false, ['FileUploadComponent'], {}),
     new Step('06', 'Tab header', 'Image in jpg', [], false, 'icons/step-idle/06.svg', 'icons/step-active/06.svg', false, false, ['FileUploadComponent'], {}),
