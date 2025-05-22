@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-text-input',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './text-input.component.scss'
 })
 export class TextInputComponent {
-
+  label = input<string>("Label placeholder");
+  placeholder = input<string>("Placeholder placeholder");
 }

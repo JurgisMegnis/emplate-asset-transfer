@@ -10,6 +10,7 @@ export class Step {
     public iconActive: string,
     public active: boolean,
     public completed: boolean,
-    public dataInputComponents: string[],
+    public components: string[],
+    public componentInputs: Record<string, string[]>,
   ) {}
 }

@@ -1,0 +1,32 @@
+@use '../../../../styles/styles.scss';
+
+label {
+    display: block;
+    @include styles.label-m;
+    padding-left: 8px;
+    margin-bottom: 8px;
+    color: styles.$base-dark;
+}
+
+input {
+    width: 100%;
+    min-width: 450px;
+    padding: .75rem 1rem;
+    @include styles.label-m;
+    color: styles.$support-medium-500;
+    background-color: styles.$support-light-100;
+    border: 1px solid styles.$support-medium-100;
+    border-radius: 8px;
+    outline: 2px solid transparent;
+    transition: 0.2s ease-out;
+
+    &:first-of-type {
+        margin-bottom: 24px;
+    }
+
+    &:focus {
+        color: styles.$base-dark;
+        outline: 2px solid styles.$main-orange-300;
+        border: 1px solid transparent;
+    }
+}
