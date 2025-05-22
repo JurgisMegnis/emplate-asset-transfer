@@ -10,12 +10,12 @@
     background-color: styles.$support-light-100;
     border: 1px dashed styles.$support-medium-200;
     border-radius: 8px;
-    transition: .15s ease-in-out;
+    transition: 0.2s ease-out;
 
     &.active {
         background-color: styles.$support-light-300;
         border: 1px solid styles.$support-medium-300;
-        transition: .15s ease-in-out;
+        transition: 0.2s ease-out;
     }
 
     .dropzone-content {
