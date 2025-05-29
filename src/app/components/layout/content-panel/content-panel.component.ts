@@ -5,8 +5,8 @@ import { SecondaryButtonComponent } from '../../ui/secondary-button/secondary-bu
 import { NgComponentOutlet } from '@angular/common';
 import { TextInputComponent } from '../../ui/text-input/text-input.component';
 import { FileUploadComponent } from '../../ui/file-upload/file-upload.component';
-import { FileFormService } from '../../../service/file-form.service';
-import { Step } from '../../../data/step.model';
+import { AssetTransferService } from '../../../service/asset-transfer.service';
+import { Step } from '../../../models/step.model';
 
 
 // Union type with all of the possible components
@@ -29,7 +29,7 @@ export class ContentPanelComponent {
   // A signal that updates with activeStep changes rendering the necessary data
   protected componentData: Signal<ComponentDataType[] | null> = computed(() => this.newComponentDataObj(this.activeStep()))
 
-  constructor(public stepsService: StepsService, private fileFormService: FileFormService ) {}
+  constructor(public stepsService: StepsService, private assetTransferService: AssetTransferService ) {}
 
    // Registry that maps component strings (from the data source) to their corresponding component classes
   private componentMap: Record<string, Type<DynamicComponent>> = {
@@ -55,10 +55,12 @@ export class ContentPanelComponent {
       if (item === TextInputComponent) {
         const labelValue = activeStep.componentInputs?.['label']?.[index] || '';
         const placeholderValue = activeStep.componentInputs?.['placeholder']?.[index] || '';
+        const currentValue = activeStep.componentInputs?.['currentValue']?.[index] || '';
 
         inputConfig = {
           label: labelValue,
-          placeholder: placeholderValue
+          placeholder: placeholderValue,
+          currentValue: currentValue,
         };
       } else {
         inputConfig = {};
@@ -71,17 +73,16 @@ export class ContentPanelComponent {
     });
   }
 
-  submitForm() {
-    const currentValue = this.fileFormService.getFormValue();
-    console.log(currentValue)
-  }
-
   handleStepChange(isNext: boolean) {
     if (isNext) {
       this.stepsService.nextStep();
-      this.submitForm();
+      this.assetTransferService.submitFormValue();
     } else {
       this.stepsService.previousStep()
+      this.assetTransferService.submitFormValueOnBack();
     }
+
+    this.assetTransferService.loadStepData();
+    console.log(this.assetTransferService.inputValues);
   }
 }

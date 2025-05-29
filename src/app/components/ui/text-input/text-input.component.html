@@ -1,2 +1,2 @@
-<label for="text-input">{{ label() }}</label>
-<input type="text" id="text-input" [placeholder]="placeholder()">
+<label for="text-input">{{ label }}</label>
+<input type="text" id="text-input" [placeholder]="placeholder" [formControl]="input" (change)="onInput($event)">
