@@ -1,5 +1,5 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { Step } from '../data/step.model';
+import { Step } from '../models/step.model';
 import { STEPS } from '../data/steps-data';
 
 @Injectable({
@@ -15,12 +15,31 @@ export class StepsService {
   );
 
   // Signal with the index of the currently active step 
-  private activeStepIndexSignal: Signal<number> = computed(() => 
+  public activeStepIndexSignal: Signal<number> = computed(() => 
     this.stepsSignal().findIndex(step => step.id === this.activeStepSignal()?.id)
-  )
+  );
+
+  // Signal with the previous step
+  public previousStepSignal: Signal<Step | undefined> = computed(() => {
+    const prevIndex = this.activeStepIndexSignal() - 1;
+    if (prevIndex >= 0) {
+        return this.stepsSignal()[prevIndex];
+    }
+    return undefined;
+  });
+
+  // Signal with the next step
+  public nextStepSignal: Signal<Step | undefined> = computed(() => {
+    const nextIndex = this.activeStepIndexSignal() + 1;
+    if (nextIndex >= 0) {
+        return this.stepsSignal()[nextIndex];
+    }
+    return undefined;
+  });
   
   constructor() { }
   
+  // Update the step item status
   nextStep() {
     if (this.activeStepIndexSignal() < this.stepsSignal().length - 1) {
       // Calculate the next index

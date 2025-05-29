@@ -20,9 +20,9 @@
     </div>
 </div>
 
-@if (filesArray.length > 0) {
+@if (filesArray().length > 0) {
     <div class="selected-files">
-        @for (file of filesArray; track $index) {
+        @for (file of filesArray(); track $index) {
             <div class="file-item">
                 <div class="icon-info-container">
                     <div class="icon-container">

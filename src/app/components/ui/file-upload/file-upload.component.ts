@@ -1,6 +1,6 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, computed, input, Signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FileFormService } from '../../../service/file-form.service';
+import { AssetTransferService } from '../../../service/asset-transfer.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -8,25 +8,18 @@ import { FileFormService } from '../../../service/file-form.service';
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss'
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent  {
   files = new FormControl<FileList | null>(null);
-  filesArray: File[] = [];
+  filesArray: Signal <File[]> = computed(() => this.assetTransferService.formFileUploadSignal())
   dragOver: boolean = false;
 
-  constructor(private fileFormService: FileFormService) {}
-
-  ngOnInit(): void {
-    /* this.files.valueChanges.subscribe(value => {
-      this.fileFormService.updateFormValue(value);
-    }); */
-  }
+  constructor(private assetTransferService: AssetTransferService) {}
   
   // Handle file selection
   onFileSelected(event: Event) {
     const fileList: FileList | null = (event.target as HTMLInputElement).files; 
     if (fileList && fileList.length > 0) {
-      this.fileFormService.updateFormValue(fileList)
-      this.filesArray = Array.from(fileList)
+      this.assetTransferService.updateFormValue(fileList)
     }
   }
 
@@ -39,8 +32,7 @@ export class FileUploadComponent implements OnInit {
     if (event.dataTransfer?.files) {
       const fileList: FileList | null = event.dataTransfer?.files; 
       if (fileList && fileList.length > 0) {
-        this.fileFormService.updateFormValue(fileList)
-        this.filesArray = Array.from(fileList)
+        this.assetTransferService.updateFormValue(fileList)
       }
     }
   }
@@ -59,7 +51,7 @@ export class FileUploadComponent implements OnInit {
 
   // Remove the selected file
   remove(index: number): void {
-    this.filesArray.splice(index, 1)
+    this.assetTransferService.removeFormValue(index);
   }
 
   // Convert the file size to the correct format

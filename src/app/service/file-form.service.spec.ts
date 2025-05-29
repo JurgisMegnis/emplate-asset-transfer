@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FileFormService } from './file-form.service';
+import { FileFormService } from './asset-transfer.service';
 
 describe('FileFormService', () => {
   let service: FileFormService;

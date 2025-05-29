@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StepsService } from '../../../service/steps.service';
-import { Step } from '../../../data/step.model';
+import { Step } from '../../../models/step.model';
 import { StepItemComponent } from '../../ui/step-item/step-item.component';
 
 @Component({
