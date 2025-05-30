@@ -34,16 +34,18 @@ jobs:
       continue-on-error: true  # Allow deployment even if tests fail
       
     - name: Build Angular app
-      run: npx ng build --configuration=production
+      run: npx ng build --configuration=production --base-href="/emplate-asset-transfer/" --output-path=dist
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist/emplate-asset-transfer
-        
-    # Alternative: Deploy to custom server via FTP
+        publish_dir: ./dist/your-app-name
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
+      if: github.ref == 'refs/heads/main'
     # - name: Deploy via FTP
     #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
     #   with:
