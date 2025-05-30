@@ -25,11 +25,11 @@ jobs:
       run: npm ci
       
     - name: Run tests
-      run: npm run test -- --browsers=ChromeHeadless --watch=false --single-run
+      run: npx ng test --browsers=ChromeHeadless --watch=false
       continue-on-error: true  # Allow deployment even if tests fail
       
     - name: Build Angular app
-      run: ng build --configuration=production
+      run: npx ng build --configuration=production
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
