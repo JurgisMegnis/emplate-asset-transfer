@@ -36,11 +36,6 @@ jobs:
 
     - name: Copy index.html to 404.html
       run: cp dist/emplate-asset-transfer/browser/index.html dist/emplate-asset-transfer/browser/404.html
-      
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: 'dist/emplate-asset-transfer/browser'
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -48,7 +43,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'dist/emplate-asset-transfer'
+        path: 'dist/emplate-asset-transfer/browser'
         
     - name: Deploy to GitHub Pages
       id: deployment
