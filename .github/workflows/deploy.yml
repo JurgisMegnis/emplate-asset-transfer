@@ -11,8 +11,11 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     
@@ -26,33 +29,19 @@ jobs:
         cache: 'npm'
         
     - name: Install Dependencies
-      run: npm install
-
-    - name: Build Angular App
-      run: npm run build
+      run: npm ci
       
-    - name: Deploy to gh pages
-      run: |
-        npx angular-cli-ghpages --dir=dist/emplate-asset-transfer
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    # - name: Deploy via FTP
-    #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-    #   with:
-    #     server: ${{ secrets.FTP_SERVER }}
-    #     username: ${{ secrets.FTP_USERNAME }}
-    #     password: ${{ secrets.FTP_PASSWORD }}
-    #     local-dir: ./dist/your-app-name/
-    #     server-dir: /public_html/
+    - name: Build Angular App
+      run: npm run build -- --base-href="/emplate-asset-transfer/"
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'dist/emplate-asset-transfer'
         
-    # Alternative: Deploy to AWS S3
-    # - name: Deploy to S3
-    #   uses: jakejarvis/s3-sync-action@master
-    #   with:
-    #     args: --delete
-    #   env:
-    #     AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #     SOURCE_DIR: './dist/your-app-name'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
