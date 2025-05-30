@@ -32,7 +32,7 @@ jobs:
       run: npm ci
       
     - name: Build Angular App
-      run: npm run build -- --base-href="/emplate-asset-transfer/"
+      run: npm run build -- --output-path=dist/emplate-asset-transfer --base-href=/emplate-asset-transfer/
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
