@@ -32,8 +32,16 @@ jobs:
       run: npm ci
       
     - name: Build Angular App
-      run: npm run build -- --output-path=dist/emplate-asset-transfer --base-href=/emplate-asset-transfer/
+      run: npm run build -- --base-href=/emplate-asset-transfer/
+
+    - name: Copy index.html to 404.html
+      run: cp dist/emplate-asset-transfer/browser/index.html dist/emplate-asset-transfer/browser/404.html
       
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'dist/emplate-asset-transfer/browser'
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
