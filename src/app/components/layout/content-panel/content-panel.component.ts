@@ -31,6 +31,8 @@ export class ContentPanelComponent {
   // A signal getting the title of the next step for presenting it on the main CTA
   protected nextStepTitle: Signal<string | undefined> = computed(() => this.stepsService.nextStepSignal()?.title)
 
+  protected activeStepIndex: Signal<number | undefined> = computed(() => this.stepsService.activeStepIndexSignal())
+
   constructor(public stepsService: StepsService, private assetTransferService: AssetTransferService ) {}
 
    // Registry that maps component strings (from the data source) to their corresponding component classes
@@ -73,6 +75,15 @@ export class ContentPanelComponent {
         inputs: inputConfig
       }
     });
+  }
+
+  // Checks the step and hides the back button on step 0
+  showBackButton() {
+    if ((this.activeStepIndex() ?? 0) > 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   handleStepChange(isNext: boolean) {
