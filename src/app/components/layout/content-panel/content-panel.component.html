@@ -14,6 +14,6 @@
 </div>
 
 <div class="button-container">
-    <app-secondary-button (click)="this.handleStepChange(false)" label="Back"></app-secondary-button>
-    <app-primary-button (click)="this.handleStepChange(true)" label="Next"></app-primary-button>
+    <app-secondary-button (click)="this.handleStepChange(false)" label="Back" icon="icons/arrow-left.svg"></app-secondary-button>
+    <app-primary-button (click)="this.handleStepChange(true)" [label]="nextStepTitle()" icon="icons/arrow-right.svg"></app-primary-button>
 </div>

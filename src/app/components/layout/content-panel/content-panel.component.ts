@@ -28,6 +28,8 @@ export class ContentPanelComponent {
   protected activeStep: Signal <Step | undefined> = computed(() => this.stepsService.activeStepSignal())
   // A signal that updates with activeStep changes rendering the necessary data
   protected componentData: Signal<ComponentDataType[] | null> = computed(() => this.newComponentDataObj(this.activeStep()))
+  // A signal getting the title of the next step for presenting it on the main CTA
+  protected nextStepTitle: Signal<string | undefined> = computed(() => this.stepsService.nextStepSignal()?.title)
 
   constructor(public stepsService: StepsService, private assetTransferService: AssetTransferService ) {}
 
