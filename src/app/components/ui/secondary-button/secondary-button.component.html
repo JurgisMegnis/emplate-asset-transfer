@@ -1,1 +1,6 @@
-<button>{{ label() }}</button>
+<button [class.hide-secondary]="hidden()">
+    <span>
+        <img [src]="icon()" alt="">
+        {{ label() }}
+    </span>
+</button>

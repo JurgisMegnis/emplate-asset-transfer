@@ -14,6 +14,10 @@
 </div>
 
 <div class="button-container">
-    <app-secondary-button (click)="this.handleStepChange(false)" label="Back"></app-secondary-button>
-    <app-primary-button (click)="this.handleStepChange(true)" label="Next"></app-primary-button>
+    <app-secondary-button (click)="this.handleStepChange(false)" label="Back" icon="icons/arrow-left.svg" [hidden]="showBackButton()"></app-secondary-button>
+    @if (this.activeStepIndex() === 10) {
+        <app-primary-button (click)="this.handleStepChange(true)" label="Submit" icon="icons/celebration.svg"></app-primary-button>
+    } @else {
+        <app-primary-button (click)="this.handleStepChange(true)" [label]="nextStepTitle()" icon="icons/arrow-right.svg"></app-primary-button>
+    }
 </div>

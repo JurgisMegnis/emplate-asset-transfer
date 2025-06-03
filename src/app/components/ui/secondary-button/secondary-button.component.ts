@@ -8,4 +8,6 @@ import { Component, input } from '@angular/core';
 })
 export class SecondaryButtonComponent {
   label = input<string>();
+  icon = input<string>();
+  hidden = input<boolean>();
 }
